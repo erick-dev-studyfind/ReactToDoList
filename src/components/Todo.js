@@ -1,18 +1,14 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 export const Todo = ({todo}) => {
 
     const {deleteTodo} = useContext(GlobalContext)
+    const [checked, setChecked] = useState(false)
+    
 
-function completeTodo(id){
-  if(todo.isCompleted===false){
-    console.log(todo)
-    todo.isCompleted = true;
-  }
-  else{
-    console.log(todo)
-    todo.isCompleted = false;
-  }
+const completeTodo = () => {
+  setChecked(current => !current)
+  todo.isCompleted = !todo.isCompleted
 }
 
 function createDate(deadline){
@@ -24,7 +20,7 @@ function createDate(deadline){
         {todo.text} <span>{(createDate(todo.deadline))}</span> 
         <button onClick = {() => deleteTodo(todo.id)} 
         className = "delete-btn">x</button>
-        <button onClick={() => completeTodo(todo)}
+        <button onClick={completeTodo}
         >Complete</button>
         
     </li>
