@@ -3,8 +3,8 @@ import AppReducer from './AppReducer'
 //Initial State
 
 const initialState = {
-    todos:[
-    ]
+    todos:[],
+    filterDate: ''
 }
 
 //Create context
@@ -30,12 +30,7 @@ export const GlobalProvider = ({children}) =>{
             payload: todo
         })
     }
-    function completeTodo(id){
-        dispatch({
-            type: 'COMPLETE_TODO',
-            payload:id
-        })
-    }
+   
 
     return(<GlobalContext.Provider value = {{
         todos: state.todos,

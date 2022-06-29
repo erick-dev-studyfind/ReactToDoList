@@ -11,6 +11,7 @@ export default (state, action) => {
           ...state,
           todos: [action.payload,...state.todos]
         }  
+     
       default:
         return state;
     }
