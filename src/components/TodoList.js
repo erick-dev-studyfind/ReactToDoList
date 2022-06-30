@@ -1,70 +1,25 @@
 import React,{useContext} from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import {Todo} from './Todo'
+
 export const TodoList = () => {
 
-  const {todos, sortOption} = useContext(GlobalContext)
-
-  
-
-  let bool = false;
-  // const {toggleCompleted} = useContext(GlobalContext)
-//   function completeTodo(id){
-    
-//     for(let i=0;i<todos.length;i++){
-//       if(todos[i].id=== id){
-//         if(todos[i].isCompleted===false){
-//           console.log(todos[i])
-//           todos[i].isCompleted = true;
-          
-//         }
-//         else{
-//           console.log(todos[i])
-//           todos[i].isCompleted = false;   
-//         }
-//     }
-//   }
-// }
-
-
-function toggleCompleted(){
-  let newTodos = [];
-
-  for(let i=0;i<todos.length;i++){
-    if(todos[i].isCompleted ===bool){
-      newTodos.push(todos[i])
-    }
-    console.log(newTodos)
-    bool = !bool
-    return newTodos
-  }
-
-  //tried it using map and filter but nothing would happen 
-  // todos.map(todo => todo.isCompleted ===!bool)
-  // console.log(todos)
-  // bool = !bool;
-  
-}
+  const {todos, hideOn, toggleView, sortOption, sortView} = useContext(GlobalContext)
+  const todoToggle = hideOn ? todos.filter(todo => !todo.isCompleted) : todos
+  const todoSort = 
+  sortOption === 'name' ? todos.sort((a,b) => a.text.localeCompare(b.text))
+  : 
+  (sortOption ==='deadline') ? todos.sort((a,b) => new Date(a.deadline + 'PST') - new Date(b.deadline +'PST')) 
+  : todoToggle;
   return (
     <div>
         <h3>Your List</h3>
-        <button onClick = {() =>toggleCompleted()}>Toggle Completed Tasks</button>
+        <button className = "button-online" onClick = {() => sortView('name')}>Sort By Name</button>
+        <button className = "button-online" onClick = {() => sortView('deadline')}>Sort by Deadline</button>
+        <button className = "button-online" onClick = {() =>toggleView(!hideOn)}>Toggle Completed Tasks</button>
         <ul className = "list">
-          {todos.map(todo => (
-            
-            <Todo
-            
-            key = {todo.id} 
-            todo = {todo}
-            //completeTodo = {completeTodo}
-            />
-            ))}
-            
-
-
+          {todoSort.map(todo => (<Todo key = {todo.id} todo = {todo}/>))}
         </ul>
-        
-        
     </div>
   )
 }
