@@ -11,6 +11,16 @@ export default (state, action) => {
           ...state,
           todos: [action.payload,...state.todos]
         }  
+      case 'TOGGLE_VIEW':
+        return{
+          ...state,
+          hideOn: action.payload
+        }
+      case 'SORT_VIEW':
+        return{
+          ...state,
+          sortOption: action.payload
+        }
      
       default:
         return state;

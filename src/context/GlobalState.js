@@ -4,7 +4,8 @@ import AppReducer from './AppReducer'
 
 const initialState = {
     todos:[],
-    filterDate: ''
+    hideOn: false,
+    sortOption: ''
 }
 
 //Create context
@@ -30,12 +31,27 @@ export const GlobalProvider = ({children}) =>{
             payload: todo
         })
     }
-   
+    function toggleView(view){
+        dispatch({
+            type:'TOGGLE_VIEW',
+            payload:view
+        })
+    }
+    function sortView(option){
+        dispatch({
+            type: 'SORT_VIEW',
+            payload:option
+        })
+    }
 
     return(<GlobalContext.Provider value = {{
         todos: state.todos,
+        hideOn: state.hideOn,
+        sortOption: state.sortOption,
         deleteTodo,
-        addTodo
+        addTodo,
+        toggleView,
+        sortView
     }}>
         {children}
     </GlobalContext.Provider>)
